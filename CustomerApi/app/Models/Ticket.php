@@ -37,4 +37,5 @@ class Ticket extends Model
     {
         return $this->hasMany(Response::class);
     }
+
 }

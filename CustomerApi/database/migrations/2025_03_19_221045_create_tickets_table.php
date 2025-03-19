@@ -17,14 +17,9 @@ return new class extends Migration
             $table->text('description');
             $table->enum('status', ['open', 'in_progress', 'resolved', 'closed'])->default('open');
             $table->enum('priority', ['low', 'medium', 'high','urgent'])->default('low');
-            $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('users');
-            $table->unsignedBigInteger('agent_id')->nullable();
-            $table->foreign('agent_id')->references('id')->on('users');
-            $table->timestamp('closed_at')->nullable();
-
-            $table->timestamps();
-        });
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->foreignId('agent_id')->nullable()->constrained('users')->onDelete('set null');
+            $table->timestamps();        });
     }
 
     /**
