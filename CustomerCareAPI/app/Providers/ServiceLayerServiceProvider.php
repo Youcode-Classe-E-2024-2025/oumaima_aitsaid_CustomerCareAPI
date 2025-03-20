@@ -1,4 +1,3 @@
-// app/Providers/ServiceLayerServiceProvider.php
 <?php
 
 namespace App\Providers;
