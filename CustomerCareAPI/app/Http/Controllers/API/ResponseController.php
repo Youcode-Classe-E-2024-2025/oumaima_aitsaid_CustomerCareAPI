@@ -143,7 +143,6 @@ class ResponseController extends Controller
      *     ),
      *     @OA\RequestBody(
      *         required=true,
-     *         @OA\JsonContent(
      *       @OA\JsonContent(
      *             required={"content"},
      *             @OA\Property(property="content", type="string", example="Updated response content")
@@ -171,7 +170,7 @@ class ResponseController extends Controller
      *             @OA\Property(property="errors", type="object")
      *         )
      *     )
-     * )
+     * ),
      */
     public function update(Request $request, $id)
     {
