@@ -15,7 +15,93 @@ class TicketController extends Controller
     {
         $this->ticketService = $ticketService;
     }
-
+ /**
+     * @OA\Get(
+     *     path="/api/tickets",
+     *     summary="Get all tickets",
+     *     tags={"Tickets"},
+     *     security={{"bearerAuth":{}}},
+     *     @OA\Parameter(
+     *         name="status",
+     *         in="query",
+     *         description="Filter by status",
+     *         required=false,
+     *         @OA\Schema(
+     *             type="string",
+     *             enum={"open", "in_progress", "resolved", "closed"}
+     *         )
+     *     ),
+     *     @OA\Parameter(
+     *         name="priority",
+     *         in="query",
+     *         description="Filter by priority",
+     *         required=false,
+     *         @OA\Schema(
+     *             type="string",
+     *             enum={"low", "medium", "high", "urgent"}
+     *         )
+     *     ),
+     *     @OA\Parameter(
+     *         name="search",
+     *         in="query",
+     *         description="Search in title and description",
+     *         required=false,
+     *         @OA\Schema(
+     *             type="string"
+     *         )
+     *     ),
+     *     @OA\Parameter(
+     *         name="sort_field",
+     *         in="query",
+     *         description="Field to sort by",
+     *         required=false,
+     *         @OA\Schema(
+     *             type="string",
+     *             enum={"created_at", "updated_at", "title", "status", "priority"}
+     *         )
+     *     ),
+     *     @OA\Parameter(
+     *         name="sort_direction",
+     *         in="query",
+     *         description="Direction to sort by",
+     *         required=false,
+     *         @OA\Schema(
+     *             type="string",
+     *             enum={"asc", "desc"}
+     *         )
+     *     ),
+     *     @OA\Parameter(
+     *         name="per_page",
+     *         in="query",
+     *         description="Number of items per page",
+     *         required=false,
+     *         @OA\Schema(
+     *             type="integer",
+     *             default=10
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="List of tickets",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="current_page", type="integer"),
+     *             @OA\Property(property="data", type="array", @OA\Items(type="object")),
+     *             @OA\Property(property="first_page_url", type="string"),
+     *             @OA\Property(property="from", type="integer"),
+     *             @OA\Property(property="last_page", type="integer"),
+     *             @OA\Property(property="last_page_url", type="string"),
+     *             @OA\Property(property="links", type="array", @OA\Items(type="object")),
+     *             @OA\Property(property="next_page_url", type="string"),
+     *             @OA\Property(property="path", type="string"),
+     *             @OA\Property(property="per_page", type="integer"),
+     *             @OA\Property(property="prev_page_url", type="string"),
+     *             @OA\Property(property="to", type="integer"),
+     *             @OA\Property(property="total", type="integer")
+     *         )
+     *     )
+     * )
+     */
     public function index(Request $request)
     {
         $filters = $request->only([
