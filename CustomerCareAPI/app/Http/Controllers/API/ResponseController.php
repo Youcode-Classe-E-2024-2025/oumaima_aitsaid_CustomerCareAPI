@@ -15,7 +15,37 @@ class ResponseController extends Controller
     {
         $this->responseService = $responseService;
     }
-
+/**
+     * @OA\Get(
+     *     path="/api/tickets/{ticketId}/responses",
+     *     summary="Get all responses for a ticket",
+     *     tags={"Responses"},
+     *     security={{"bearerAuth":{}}},
+     *     @OA\Parameter(
+     *         name="ticketId",
+     *         in="path",
+     *         description="Ticket ID",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="integer"
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="List of responses",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="responses", type="array", @OA\Items(type="object"))
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Ticket not found or access denied",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="Ticket not found or access denied")
+     *         )
+     *     )
+     * )
+     */
     public function index($ticketId)
     {
         $responses = $this->responseService->getResponsesByTicketId($ticketId);
