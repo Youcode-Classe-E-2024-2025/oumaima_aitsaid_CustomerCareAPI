@@ -169,7 +169,21 @@ class AuthController extends Controller
         $this->authService->logout();
         return response()->json(['message' => 'User logged out successfully']);
     }
-
+ /**
+     * @OA\Get(
+     *     path="/api/user",
+     *     summary="Get authenticated user information",
+     *     tags={"Authentication"},
+     *     security={{"bearerAuth":{}}},
+     *     @OA\Response(
+     *         response=200,
+     *         description="User information",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="user", type="object")
+     *         )
+     *     )
+     * )
+     */
     public function user(Request $request)
     {
         return response()->json(['user' => $request->user()]);
