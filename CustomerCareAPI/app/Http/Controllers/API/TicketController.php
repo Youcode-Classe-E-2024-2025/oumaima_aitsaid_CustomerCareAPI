@@ -154,7 +154,39 @@ class TicketController extends Controller
         
         return response()->json(['ticket' => $ticket]);
     }
-
+/**
+     * @OA\Post(
+     *     path="/api/tickets",
+     *     summary="Create a new ticket",
+     *     tags={"Tickets"},
+     *     security={{"bearerAuth":{}}},
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             required={"title", "description"},
+     *             @OA\Property(property="title", type="string", example="Cannot login to my account"),
+     *             @OA\Property(property="description", type="string", example="I am trying to login but it says invalid credentials"),
+     *             @OA\Property(property="priority", type="string", enum={"low", "medium", "high", "urgent"}, example="medium")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=201,
+     *         description="Ticket created successfully",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="Ticket created successfully"),
+     *             @OA\Property(property="ticket", type="object")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=422,
+     *  *         response=422,
+     *         description="Validation error",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="errors", type="object")
+     *         )
+     *     )
+     * )
+     */
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
