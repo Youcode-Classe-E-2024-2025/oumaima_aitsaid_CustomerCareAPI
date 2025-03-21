@@ -56,7 +56,52 @@ class ResponseController extends Controller
         
         return response()->json(['responses' => $responses]);
     }
-
+/**
+     * @OA\Post(
+     *     path="/api/tickets/{ticketId}/responses",
+     *     summary="Create a new response for a ticket",
+     *     tags={"Responses"},
+     *     security={{"bearerAuth":{}}},
+     *     @OA\Parameter(
+     *         name="ticketId",
+     *         in="path",
+     *         description="Ticket ID",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="integer"
+     *         )
+     *     ),
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             required={"content"},
+     *             @OA\Property(property="content", type="string", example="This is a response to your ticket")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=201,
+     *         description="Response created successfully",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="Response created successfully"),
+     *             @OA\Property(property="response", type="object")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Ticket not found or access denied",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="Ticket not found or access denied")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=422,
+     *         description="Validation error",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="errors", type="object")
+     *         )
+     *     )
+     * )
+     */
     public function store(Request $request, $ticketId)
     {
         $validator = Validator::make($request->all(), [
