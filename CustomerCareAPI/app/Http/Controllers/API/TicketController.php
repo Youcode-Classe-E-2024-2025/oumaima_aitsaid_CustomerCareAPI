@@ -276,7 +276,37 @@ class TicketController extends Controller
             'ticket' => $ticket
         ]);
     }
-
+ /**
+     * @OA\Delete(
+     *     path="/api/tickets/{id}",
+     *     summary="Delete a ticket",
+     *     tags={"Tickets"},
+     *     security={{"bearerAuth":{}}},
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         description="Ticket ID",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="integer"
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Ticket deleted successfully",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="Ticket deleted successfully")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Ticket not found or access denied",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="Ticket not found or access denied")
+     *         )
+     *     )
+     * )
+     */
     public function destroy($id)
     {
         $result = $this->ticketService->deleteTicket($id);
