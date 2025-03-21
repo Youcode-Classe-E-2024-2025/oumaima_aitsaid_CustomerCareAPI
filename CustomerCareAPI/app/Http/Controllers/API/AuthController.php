@@ -1,4 +1,3 @@
-// app/Http/Controllers/API/AuthController.php
 <?php
 
 namespace App\Http\Controllers\API;
