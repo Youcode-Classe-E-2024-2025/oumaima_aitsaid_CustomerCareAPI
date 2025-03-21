@@ -194,7 +194,37 @@ class ResponseController extends Controller
             'response' => $response
         ]);
     }
-
+ /**
+     * @OA\Delete(
+     *     path="/api/responses/{id}",
+     *     summary="Delete a response",
+     *     tags={"Responses"},
+     *     security={{"bearerAuth":{}}},
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         description="Response ID",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="integer"
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Response deleted successfully",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="Response deleted successfully")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Response not found or access denied",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="Response not found or access denied")
+     *         )
+     *     )
+     * )
+     */
     public function destroy($id)
     {
         $result = $this->responseService->deleteResponse($id);
