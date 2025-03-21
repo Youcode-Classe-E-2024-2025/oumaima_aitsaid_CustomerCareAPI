@@ -179,7 +179,7 @@ class TicketController extends Controller
      *     ),
      *     @OA\Response(
      *         response=422,
-     *  *         response=422,
+     *          response=422,
      *         description="Validation error",
      *         @OA\JsonContent(
      *             @OA\Property(property="errors", type="object")
@@ -206,7 +206,53 @@ class TicketController extends Controller
             'ticket' => $ticket
         ], 201);
     }
-
+/**
+     * @OA\Put(
+     *     path="/api/tickets/{id}",
+     *     summary="Update a ticket",
+     *     tags={"Tickets"},
+     *     security={{"bearerAuth":{}}},
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         description="Ticket ID",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="integer"
+     *         )
+     *     ),
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             @OA\Property(property="title", type="string", example="Updated ticket title"),
+     *             @OA\Property(property="description", type="string", example="Updated ticket description"),
+     *             @OA\Property(property="priority", type="string", enum={"low", "medium", "high", "urgent"}, example="high")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Ticket updated successfully",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="Ticket updated successfully"),
+     *             @OA\Property(property="ticket", type="object")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Ticket not found or access denied",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="Ticket not found or access denied")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=422,
+     *         description="Validation error",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="errors", type="object")
+     *         )
+     *     )
+     * )
+     */
     public function update(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
