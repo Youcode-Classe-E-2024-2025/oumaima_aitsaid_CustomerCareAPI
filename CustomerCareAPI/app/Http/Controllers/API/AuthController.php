@@ -149,7 +149,21 @@ class AuthController extends Controller
             'token' => $result['token']
         ]);
     }
-
+/**
+     * @OA\Post(
+     *     path="/api/logout",
+     *     summary="Logout a user",
+     *     tags={"Authentication"},
+     *     security={{"bearerAuth":{}}},
+     *     @OA\Response(
+     *         response=200,
+     *         description="User logged out successfully",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="User logged out successfully")
+     *         )
+     *     )
+     * )
+     */
     public function logout(Request $request)
     {
         $this->authService->logout();
