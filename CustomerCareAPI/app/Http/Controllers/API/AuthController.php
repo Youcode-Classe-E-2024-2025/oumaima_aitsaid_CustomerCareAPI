@@ -18,6 +18,12 @@ use Illuminate\Support\Facades\Validator;
  *     )
  * )
  * 
+ * @OA\SecurityScheme(
+ *     type="http",
+ *     scheme="bearer",
+ *     securityScheme="bearerAuth",
+ *     bearerFormat="JWT"
+ * )
  */
 class AuthController extends Controller
 {
