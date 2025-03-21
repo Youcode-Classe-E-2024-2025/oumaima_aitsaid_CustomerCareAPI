@@ -113,7 +113,37 @@ class TicketController extends Controller
         
         return response()->json($tickets);
     }
-
+ /**
+     * @OA\Get(
+     *     path="/api/tickets/{id}",
+     *     summary="Get a specific ticket",
+     *     tags={"Tickets"},
+     *     security={{"bearerAuth":{}}},
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         description="Ticket ID",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="integer"
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Ticket details",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="ticket", type="object")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Ticket not found or access denied",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="Ticket not found or access denied")
+     *         )
+     *     )
+     * )
+     */
     public function show($id)
     {
         $ticket = $this->ticketService->getTicketById($id);
