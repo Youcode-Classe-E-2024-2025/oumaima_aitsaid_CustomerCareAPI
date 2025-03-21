@@ -317,6 +317,7 @@ class TicketController extends Controller
         
         return response()->json(['message' => 'Ticket deleted successfully']);
     }
+    
 
     public function assign(Request $request, $id)
     {
