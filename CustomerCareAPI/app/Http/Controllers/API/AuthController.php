@@ -7,6 +7,18 @@ use App\Services\Interfaces\AuthServiceInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
+/**
+ * @OA\Info(
+ *     title="CustomerCareAPI",
+ *     version="1.0.0",
+ *     description="API for customer support ticket management",
+ *     @OA\Contact(
+ *         email="contact@example.com",
+ *         name="API Support"
+ *     )
+ * )
+ * 
+ */
 class AuthController extends Controller
 {
     protected $authService;
