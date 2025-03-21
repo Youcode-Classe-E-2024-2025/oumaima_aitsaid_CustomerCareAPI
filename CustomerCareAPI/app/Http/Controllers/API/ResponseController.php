@@ -126,7 +126,53 @@ class ResponseController extends Controller
             'response' => $response
         ], 201);
     }
-
+ /**
+     * @OA\Put(
+     *     path="/api/responses/{id}",
+     *     summary="Update a response",
+     *     tags={"Responses"},
+     *     security={{"bearerAuth":{}}},
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         description="Response ID",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="integer"
+     *         )
+     *     ),
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *       @OA\JsonContent(
+     *             required={"content"},
+     *             @OA\Property(property="content", type="string", example="Updated response content")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Response updated successfully",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="Response updated successfully"),
+     *             @OA\Property(property="response", type="object")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Response not found or access denied",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="Response not found or access denied")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=422,
+     *         description="Validation error",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="errors", type="object")
+     *         )
+     *     )
+     * )
+     */
     public function update(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
