@@ -13,6 +13,7 @@ class Response extends Model
         'content',
         'ticket_id',
         'user_id',
+        'is_private',
     ];
 
     public function ticket()
