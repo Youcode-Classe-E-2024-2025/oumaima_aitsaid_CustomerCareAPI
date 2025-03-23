@@ -1,66 +1,225 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+## 📋Table of Contents
+* Overview
+* Features
+* System Requirements
+* Installation
+* Configuration
+* API Documentation
+* Testing
+* Frontend Setup
+* Project Structure
+* Service Layer Pattern
+* Contributing
+* License
+## 🌟 Overview
+CustomerCareAPI is a robust customer support ticket management system built with Laravel. It provides a RESTful API for managing support tickets, user authentication, and ticket tracking. The system follows the Service Layer Design Pattern for clean code organization and maintainability.
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## ✨ Features
+User Authentication: Secure login, registration, and token-based authentication using Laravel Sanctum
+Role-Based Access Control: Different permissions for clients, agents, and administrators
+Ticket Management: Create, read, update, and delete support tickets
+Response Tracking: Full history of communications for each ticket
+Advanced Filtering: Search, sort, and filter tickets by various parameters
+API Documentation: Comprehensive Swagger documentation
+Frontend Integration: JavaScript frontend for consuming the API
+## 🖥️ System Requirements
+PHP 8.1 or higher
+Composer 2.0+
+MySQL 5.7+ or PostgreSQL 10+
+Node.js 16+ and npm (for frontend)
+Git
+## 🚀 Installation
+Clone the Repository
+git clone https://github.com/Youcode-Classe-E-2024-2025/oumaima_aitsaid_CustomerCareAPI.git
+cd CustomerCareAPI
 
-## About Laravel
+Install PHP Dependencies
+composer install
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Set Up Environment Variables
+cp .env.example .env
+php artisan key:generate
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+Edit the .env file to configure your database connection:
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+DB_CONNECTION=pgsql
+DB_HOST=127.0.0.1
+DB_PORT=5432
+DB_DATABASE=customer
+DB_USERNAME=postgres
+DB_PASSWORD=1234
 
-## Learning Laravel
+Run Migrations and Seeders
+php artisan migrate
+php artisan db:seed
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+This will create the necessary database tables and populate them with sample data.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+Install Laravel Sanctum
+php artisan vendor:publish --provider="Laravel\Sanctum\SanctumServiceProvider"
+php artisan migrate
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+Generate Swagger Documentation
+php artisan l5-swagger:generate
 
-## Laravel Sponsors
+Start the Development Server
+php artisan serve
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+The API will be available at http://localhost:8000.
 
-### Premium Partners
+## ⚙️ Configuration
+User Roles
+The system supports three user roles:
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+Client: Can create tickets and view their own tickets
+Agent: Can view and respond to tickets assigned to them
+Admin: Has full access to all tickets and user management
+Default admin credentials:
 
-## Contributing
+Email: admin@example.com
+Password: password
+Rate Limiting
+API rate limiting is configured in app/Providers/RouteServiceProvider.php. By default:
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Authentication endpoints: 5 requests per minute
+Other endpoints: 60 requests per minute
+## 📚 API Documentation
+Swagger documentation is available at http://localhost:8000/api/documentation.
 
-## Code of Conduct
+Authentication Endpoints
+POST /api/register - Register a new user
+POST /api/login - Login and get access token
+POST /api/logout - Logout and invalidate token
+GET /api/user - Get authenticated user information
+Ticket Endpoints
+GET /api/tickets - List all tickets (filtered by user role)
+POST /api/tickets - Create a new ticket
+GET /api/tickets/{id} - Get a specific ticket
+PUT /api/tickets/{id} - Update a ticket
+DELETE /api/tickets/{id} - Delete a ticket
+POST /api/tickets/{id}/responses - Add a response to a ticket
+GET /api/tickets/{id}/responses - Get all responses for a ticket
+## 🧪 Testing
+Run the test suite with:
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+php artisan test
 
-## Security Vulnerabilities
+Or for more detailed output:
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+./vendor/bin/phpunit
 
-## License
+Test Coverage
+Generate a test coverage report:
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+XDEBUG_MODE=coverage ./vendor/bin/phpunit --coverage-html reports/
+
+The coverage report will be available in the reports directory.
+
+## 🖌️ Frontend Setup
+The frontend is built with [Vue.js/React/Angular] and communicates with the API.
+
+Install Frontend Dependencies
+cd frontend
+npm install
+
+Configure API URL
+Edit the .env file in the frontend directory:
+
+VITE_API_URL=http://localhost:8000/api
+
+Start the Frontend Development Server
+npm run dev
+
+The frontend will be available at http://localhost:5173.
+
+## 📂 Project Structure
+CustomerCareAPI/
+├── app/
+│   ├── Http/
+│   │   ├── Controllers/
+│   │   │   └── API/
+│   │   │       ├── AuthController.php
+│   │   │       └── TicketController.php
+│   │   └── Middleware/
+│   ├── Models/
+│   │   ├── User.php
+│   │   ├── Ticket.php
+│   │   └── Response.php
+│   └── Services/
+│       ├── Interfaces/
+│       │   ├── AuthServiceInterface.php
+│       │   └── TicketServiceInterface.php
+│       ├── AuthService.php
+│       └── TicketService.php
+├── database/
+│   ├── migrations/
+│   └── seeders/
+├── routes/
+│   └── api.php
+├── tests/
+│   ├── Feature/
+│   │   └── API/
+│   └── Unit/
+│       └── Services/
+└── frontend/
+    ├── src/
+    │   ├── components/
+    │   ├── views/
+    │   └── services/
+    └── package.json
+
+## 🏗️ Service Layer Pattern
+This project implements the Service Layer Design Pattern to separate business logic from controllers:
+
+Controllers: Handle HTTP requests and responses
+Services: Contain business logic and interact with models
+Interfaces: Define contracts for services to implement
+Models: Represent database entities and relationships
+Example:
+
+## Controller
+public function store(Request $request)
+{
+    $validator = Validator::make($request->all(), [
+        'title' => 'required|string|max:255',
+        'description' => 'required|string',
+    ]);
+
+    if ($validator->fails()) {
+        return response()->json(['errors' => $validator->errors()], 422);
+    }
+
+    $ticket = $this->ticketService->createTicket($request->all());
+
+    return response()->json([
+        'message' => 'Ticket created successfully',
+        'ticket' => $ticket
+    ], 201);
+}
+
+## Service
+public function createTicket(array $data)
+{
+    $ticket = Ticket::create([
+        'title' => $data['title'],
+        'description' => $data['description'],
+        'status' => 'open',
+        'priority' => $data['priority'] ?? 'medium',
+        'user_id' => auth()->id(),
+    ]);
+
+    // Additional business logic here
+
+    return $ticket;
+}
+
+## 🤝 Contributing
+Fork the repository
+Create a feature branch: git checkout -b feature-name
+Commit your changes: git commit -m 'Add some feature'
+Push to the branch: git push origin feature-name
+Submit a pull request
+## 📄 License
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+Developed with ❤️ oumaima ait said.
