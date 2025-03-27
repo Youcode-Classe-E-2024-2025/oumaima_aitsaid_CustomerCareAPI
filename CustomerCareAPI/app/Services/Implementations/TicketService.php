@@ -57,7 +57,7 @@ class TicketService implements TicketServiceInterface
     public function getTicketById($id)
     {
         $user = Auth::user();
-        $ticket = Ticket::with(['user', 'agent', 'comments.user'])->find($id);
+        $ticket = Ticket::with(['user', 'agent'])->find($id);
         
         if (!$ticket) {
             return null;

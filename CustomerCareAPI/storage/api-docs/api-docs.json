@@ -317,7 +317,7 @@
                 "tags": [
                     "Responses"
                 ],
-                "summary": "Create a new response for a ticket",
+                "summary": "Create a new response",
                 "operationId": "e35dc456f09918dfaf9e913fecebb50b",
                 "parameters": [
                     {
@@ -341,7 +341,11 @@
                                 "properties": {
                                     "content": {
                                         "type": "string",
-                                        "example": "This is a response to your ticket"
+                                        "example": "This is a response to the ticket"
+                                    },
+                                    "is_private": {
+                                        "type": "boolean",
+                                        "example": false
                                     }
                                 },
                                 "type": "object"
@@ -409,6 +413,62 @@
             }
         },
         "/api/responses/{id}": {
+            "get": {
+                "tags": [
+                    "Responses"
+                ],
+                "summary": "Get a specific response",
+                "operationId": "42f9463f68ffc616e76b9123eafc9fdd",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Response ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Response details",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "response": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Response not found or access denied",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Response not found or access denied"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
             "put": {
                 "tags": [
                     "Responses"
@@ -431,13 +491,14 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "required": [
-                                    "content"
-                                ],
                                 "properties": {
                                     "content": {
                                         "type": "string",
                                         "example": "Updated response content"
+                                    },
+                                    "is_private": {
+                                        "type": "boolean",
+                                        "example": false
                                     }
                                 },
                                 "type": "object"
@@ -1212,6 +1273,15 @@
                         "bearerAuth": []
                     }
                 ]
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "bearerFormat": "JWT",
+                "scheme": "bearer"
             }
         }
     },

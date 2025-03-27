@@ -10,7 +10,15 @@ use Illuminate\Support\Facades\Validator;
 class TicketController extends Controller
 {
     protected $ticketService;
-
+    /**
+    * @OA\SecurityScheme(
+        *
+       * type="http",
+          * scheme="bearer",
+           *bearerFormat="JWT",
+           *securityScheme="bearerAuth"
+           *)
+              */
     public function __construct(TicketServiceInterface $ticketService)
     {
         $this->ticketService = $ticketService;
